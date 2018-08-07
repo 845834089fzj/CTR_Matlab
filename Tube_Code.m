@@ -21,9 +21,9 @@ J1=(pi/2) * (r_out1^4-r_in1^4);   % polar moment of inertia tube 1
 I2=(pi/4) * (r_out2^4-r_in2^4);   % 2nd moemnt of inertai tube 2
 J2=(pi/2) * (r_out2^4-r_in2^4);   % polar moment of inertia tube 2
 
-E=[E1 E1]; I=[I1 I1]; G=[G1 G2]; J=[J1 J2];
-Ux=[-5 5];
-Uy=[0 0];
+E=[E1 E2]; I=[I1 I2]; G=[G1 G2]; J=[J1 J2];
+Ux=[10 5];
+Uy=[5 0];
     
 
 l=0.01*[20 20];   % length of tubes 
@@ -100,16 +100,16 @@ for i=1:n
 end
 
 ux=zeros(1,n);uy=zeros(1,n);
-u1= K\ SUM ;
+u1= K\ SUM;
 ux(1)=u1(1); uy(1)=u1(2);
 
 for i=2:n    
-u= [cos(y(m,n+i)) sin(y(m,n+i)) 0; -sin(y(m,n+i)) cos(y(m,n+i)) 0; 0 0 1] * u1; 
+u= [cos(y(m,n+i)) sin(y(m,n+i)) 0; -sin(y(m,n+i)) cos(y(m,n+i)) 0; 0 0 1] * u1;
 ux(i)=u(1); uy(i)=u(2);    
 end
 
 U_x=[U_x; ux];
-U_y=[U_y; ux];
+U_y=[U_y; uy];
 end
 
 Length=[Length; s];
