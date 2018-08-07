@@ -13,13 +13,14 @@ d1= l+B; % position of tip of the tubes
 d2=d1-l_k; % position of the point where tube bending starts
 points=[0 B d2 d1];
 [L, index]=sort(points);
-L = diff(L);  % length of each segment
+L = 1e-5*floor(1e5*diff(L));  % length of each segment 
+%(used floor because diff command doesn't give absolute zero sometimes)
 
 for i=1:k-1
 if B(i)>B(i+1)
     sprintf('inner tube is clashing into outer tubes')
-    EE=zeros(k,length(L));
-    II=EE; GG=EE; JJ=EE; UUx=EE; UUy=EE;
+    E=zeros(k,length(L));
+    I=E; G=E; J=E; Ux=E; Uy=E;
     return
 end
 end

@@ -29,7 +29,6 @@ u= [cos(y(n+i)) sin(y(n+i)) 0; -sin(y(n+i)) cos(y(n+i)) 0; 0 0 1] * u1;
 ux(i)=u(1); uy(i)=u(2);    
 end
 
-
 % odes for twist
 for i=1:n      
     if G(i)==0

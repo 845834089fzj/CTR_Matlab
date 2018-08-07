@@ -6,31 +6,21 @@ clc
 
 %% Initializing parameters 
 
-% Note: first tube is the most inner tube
-n=2;                  % number of tubes
-E1=30e9;             % Young's modulus
-G1=11e9;             % Shear modulus
-E2=30e9;             % Young's modulus
-G2=11e9;             % Shear modulus
-r_in1=0e-3;          % inner diameter tube 1
-r_out1=1.5e-3;       % outer diameter tube 1
-r_in2=1.9e-3;        % inner diameter tube 2 (outer)
-r_out2=2.45e-3;      % outer diameter tube 2 (outer)
-I1=(pi/4) * (r_out1^4-r_in1^4);   % 2nd moemnt of inertai tube 1
-J1=(pi/2) * (r_out1^4-r_in1^4);   % polar moment of inertia tube 1
-I2=(pi/4) * (r_out2^4-r_in2^4);   % 2nd moemnt of inertai tube 2
-J2=(pi/2) * (r_out2^4-r_in2^4);   % polar moment of inertia tube 2
-
-E=[E1 E2]; I=[I1 I2]; G=[G1 G2]; J=[J1 J2];
-Ux=[10 5];
-Uy=[5 0];
+param  % load tube parameters inside param.m file
     
 
-l=0.01*[20 20];   % length of tubes 
-B=0.01*[-5 -5];  % length of tubes before template
-l_k=0.01*[10 10]; % length of curved part of tubes
+l=0.01*[45 30 20];   % length of tubes 
+B=0.01*[-14 -10 -5];  % length of tubes before template
+l_k=0.01*[10 10 15]; % length of curved part of tubes
 
-% segmenting tubes
+%initial angles
+alpha_1=pi;
+alpha_2=0;
+alpha_3=0;
+alpha=[0 alpha_2-alpha_1 alpha_3-alpha_1];
+
+% segmenting tubes  
+% check all inputs must have n elements, n is number of tubes
 [L,d1,EE,UUx,UUy,II,GG,JJ] = segmenting(E,Ux,Uy,I,G,J,l,B,l_k);
 
 k=length(l); 
@@ -78,18 +68,18 @@ span=[0 S];       % vector of tube abssica starting at zero
 Length=[]; U_x=[]; U_y=[]; U_z=[]; Alpha=[];   % solved length, curvatures, and twist angles
 %U1_after=[0;0;0];             % 1st tube initial curvature at segment beginning
 
-
 for seg=1:length(S)
     
 s_span = [span(seg) span(seg+1)-0.0001];
 y_0=zeros(2*n,1);
+y_0(n+1:2*n)=alpha;
 
 [s,y] = ode45(@(s,y) ode(s,y,Ux(:,seg),Uy(:,seg),E(:,seg),I(:,seg),G(:,seg),J(:,seg),n), s_span, y_0);
 % first n elements of y are curvatures along z, e.g., y= [ u1_z  u2_z ... ]
 % last n elements of y are twist angles, alpha_i
 
 % calculating curvatures along x and y
- for m=1:length(s)
+for m=1:length(s)
  
 K=zeros(3,3);SUM=zeros(3,1);
 for i=1:n
@@ -137,11 +127,15 @@ end
 %% Calculating Shape
 
 R0=eye(3,3);
+R0=[cos(alpha_1) -sin(alpha_1) 0; sin(alpha_1) cos(alpha_1) 0; 0 0 1];
+
 y_0=[0; 0 ;0 ;reshape(R0,[9,1])];
-[s,y] = ode45(@(s,y) ode2(s,y,U_x,U_y,U_z,Length), s_span, y_0);
+[s,y] = ode45(@(s,y) ode2(s,y,U_x,U_y,U_z,Length), [0 Length(end)], y_0);
 %y(1) to y(3) are x , y, and z position of point materials
 
 figure(2)
 plot3(y(:,1),y(:,2),y(:,3), 'LineWidth',2)
 xlabel('X [mm]'); ylabel('Y [m]'); zlabel('Z [m]')
 grid on
+axis equal
+hold on

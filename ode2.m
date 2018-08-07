@@ -7,7 +7,7 @@ e3=[0 0 1]';
 
 % approximating curvature of 1st tube as a function of tube length
 
-ux = interp1(Length,U_x(:,1),s); 
+ux = interp1(Length,U_x(:,1),s);
 uy = interp1(Length,U_y(:,1),s); 
 uz = interp1(Length,U_z(:,1),s); 
 
