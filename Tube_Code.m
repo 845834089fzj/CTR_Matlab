@@ -14,9 +14,9 @@ B=0.01*[-14 -10 -5];  % length of tubes before template
 l_k=0.01*[10 10 15]; % length of curved part of tubes
 
 %initial angles
-alpha_1=pi;
-alpha_2=0;
-alpha_3=0;
+alpha_1=3*pi/2;
+alpha_2=pi;
+alpha_3=pi;
 alpha=[0 alpha_2-alpha_1 alpha_3-alpha_1];
 
 % segmenting tubes  
@@ -126,8 +126,7 @@ end
 
 %% Calculating Shape
 
-R0=eye(3,3);
-R0=[cos(alpha_1) -sin(alpha_1) 0; sin(alpha_1) cos(alpha_1) 0; 0 0 1];
+R0=[cos(alpha_1) sin(alpha_1) 0; -sin(alpha_1) cos(alpha_1) 0; 0 0 1]; % why should it be R' not R?
 
 y_0=[0; 0 ;0 ;reshape(R0,[9,1])];
 [s,y] = ode45(@(s,y) ode2(s,y,U_x,U_y,U_z,Length), [0 Length(end)], y_0);
