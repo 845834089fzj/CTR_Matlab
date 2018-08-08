@@ -5,7 +5,7 @@ clearvars
 clc
 
 %% Initializing parameters 
-global Ux Uy E I G J n  S  span a d_tip
+global Ux Uy E I G J n  S  span a d_tip B
 
 param  % load tube parameters inside param.m file
     
@@ -98,10 +98,10 @@ hold on
 
 
 function C= Cost(uz_0)
-global Ux Uy E I G J n  S span a d_tip
+global Ux Uy E I G J n  S span a d_tip B
 
 y_0=zeros(2*n,1);
-y_0(n+1:2*n)=a;
+y_0(n+1:2*n)=a'-B'.*uz_0;
 y_0(1:n)=uz_0;
 
 C=0;
@@ -120,7 +120,7 @@ U_z=[U_z; y(:,1:n )];
 % check for BC at end of tubes, U_z should be zero
 for p=1:n
 if (abs(s(end)-d_tip(p))<0.001)
-C=U_z(end,:)*U_z(end,:)'+C;
+C=1e8.*U_z(end,:)*U_z(end,:)'+C;
 end
 end
 
