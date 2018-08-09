@@ -34,7 +34,7 @@ for i=1:length(L)
     SS(i)=sum(L(1:i));
     %plot((B(1)+SS(i))*ones(1,10),1:10,'b' ,'LineWidth',2)
 end
-hold off
+%hold off
 
 % S is segmented abssica of tube after template
  S=SS(SS+min(B)>0)+min(B);
@@ -136,12 +136,11 @@ r2=[y(1:tube2_end,1),y(1:tube2_end,2),y(1:tube2_end,3)];
 [~, tube3_end] = min(abs(s-d_tip(3)));
 r3=[y(1:tube3_end,1),y(1:tube3_end,2),y(1:tube3_end,3)];
 
-figure(2)
-hold on
-
+figure(1)
+xlabel('X [mm]'); ylabel('Y [m]'); zlabel('Z [m]')
 plot3(r1(:,1),r1(:,2),r1(:,3),'LineWidth',2)
+hold on
 plot3(r2(:,1),r2(:,2),r2(:,3),'LineWidth',4)
 plot3(r3(:,1),r3(:,2),r3(:,3),'LineWidth',6)
-xlabel('X [mm]'); ylabel('Y [m]'); zlabel('Z [m]')
 grid on
 axis equal
