@@ -15,8 +15,8 @@ l_k=0.01*[10 10 15]; % length of curved part of tubes
 
 %initial angles
 alpha_1=pi/2;
-alpha_2=pi/2;
-alpha_3=pi/2;
+alpha_2=pi/3;
+alpha_3=pi;
 alpha=[0 alpha_2-alpha_1 alpha_3-alpha_1];
 
 % segmenting tubes  
@@ -134,7 +134,6 @@ y_0=[0; 0 ;0 ;reshape(R0,[9,1])];
 R=[y(end,4) y(end,5) y(end,6);y(end,7) y(end,8) y(end,9);y(end,10) y(end,11) y(end,12)]
 
 %y(1) to y(3) are x , y, and z position of point materials
-toc
 r1=[y(:,1),y(:,2),y(:,3)];
 [~, tube2_end] = min(abs(s-d_tip(2)));
 r2=[y(1:tube2_end,1),y(1:tube2_end,2),y(1:tube2_end,3)];
