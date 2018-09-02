@@ -6,11 +6,13 @@ clc
 global q
 
 param
-B=0.01*[-14 -10 -5];  % length of tubes before template
+l=0.01*[55 30 20];   % length of tubes 
+B=0.01*[-35 -15 -10];  % length of tubes before template
+l_k=0.01*[10 10 15]; % length of curved part of tubes
 
 %initial angles
 alpha_1=3*pi/2;
-alpha_2=pi;
+alpha_2=pi/2;
 alpha_3=pi;
 
 q=[B alpha_1 alpha_2 alpha_3];
@@ -38,9 +40,8 @@ param  % load tube parameters inside param.m file
 
 % q1 o q3 are robot base movments, q3 to q6 are rbot base rotation angle.
 
-l=0.01*[45 30 20];   % length of tubes 
+l=0.01*[55 30 20];   % length of tubes 
 l_k=0.01*[10 10 15]; % length of curved part of tubes
-
 
 B=q(1:3);  % length of tubes before template
 %initial angles
@@ -117,7 +118,7 @@ param  % load tube parameters inside param.m file
 
 % q1 o q3 are robot base movments, q3 to q6 are rbot base rotation angle.
 
-l=0.01*[45 30 20];   % length of tubes 
+l=0.01*[55 30 20];   % length of tubes 
 l_k=0.01*[10 10 15]; % length of curved part of tubes
 
 
@@ -152,8 +153,8 @@ end
 span=[0 S];       % vector of tube abssica starting at zero
 Length=[]; r=[]; U_z=[]; angle=[]; % solved length, curvatures, and twist angles
 %U1_after=[0;0;0];             % 1st tube initial curvature at segment beginning
-r0=[ 0 0 0]'; R0=[cos(alpha_1) sin(alpha_1) 0; -sin(alpha_1) cos(alpha_1) 0; 0 0 1];
-R0=reshape(R0,[9,1]);
+r0=[ 0 0 0]'; R0=[cos(alpha_1) -sin(alpha_1) 0; sin(alpha_1) cos(alpha_1) 0; 0 0 1];
+R0=reshape(R0',[9,1]);
 alpha=alpha-B.*uz_0';
 
 for seg=1:length(S)

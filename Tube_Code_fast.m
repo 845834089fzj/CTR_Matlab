@@ -55,10 +55,10 @@ hold off
 span=[0 S];       % vector of tube abssica starting at zero
 Length=[]; r=[];  U_z=[]; % solved length, curvatures, and twist angles
 %U1_after=[0;0;0];             % 1st tube initial curvature at segment beginning
-r0=[ 0 0 0]'; R0=[cos(alpha_1) sin(alpha_1) 0; -sin(alpha_1) cos(alpha_1) 0; 0 0 1]; % why should it be R' not R?
+r0=[ 0 0 0]'; R0=[cos(alpha_1) -sin(alpha_1) 0; sin(alpha_1) cos(alpha_1) 0; 0 0 1]; 
 uz_0=[0 0 0]';
 
-R0=reshape(R0,[9,1]);
+R0=reshape(R0',[9,1]);
 for seg=1:length(S)
     
 s_span = [span(seg) span(seg+1)-0.0000001];

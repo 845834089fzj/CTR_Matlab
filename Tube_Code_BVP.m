@@ -10,9 +10,9 @@ global Ux Uy E I G J n  S  span a d_tip B
 param  % load tube parameters inside param.m file
     
 
-l=0.01*[45 30 20];   % length of tubes 
-B=0.01*[-12 -7 -5];  % length of tubes before template
-l_k=0.01*[10 8 15]; % length of curved part of tubes
+l=0.01*[55 30 20];   % length of tubes 
+B=0.01*[-35 -15 -10];  % length of tubes before template
+l_k=0.01*[10 10 15]; % length of curved part of tubes
 
 %initial angles % direction of rotation for 1st tube seems to be different
 %from 2nd and 3rd
